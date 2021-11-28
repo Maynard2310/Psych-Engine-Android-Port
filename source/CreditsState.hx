@@ -12,20 +12,41 @@ import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
-#if MODS_ALLOWED
-import sys.FileSystem;
-#end
 import lime.utils.Assets;
-
+import flixel.addons.display.FlxBackdrop;
 using StringTools;
 
 class CreditsState extends MusicBeatState
 {
 	var curSelected:Int = 1;
-
+	var backdrops:FlxBackdrop = new FlxBackdrop(Paths.image('backdrop2'), 0.2, 0.2, true, true);
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var iconArray:Array<AttachedSprite> = [];
-	private var creditsStuff:Array<Dynamic> = [];
+
+	private static var creditsStuff:Array<Dynamic> = [ //Name - Icon name - Description - Link - BG Color
+		['Mod Creators'],
+		['Mong',		'MONG',		'Artist and Animator',					'https://twitter.com/spacedoggo_art',	0xFF6699ff],
+		['Saruky',			'SARUKY',		'Composer',				'https://twitter.com/Saruky__',		0xFFf44771],
+		['Chromaatical',		'Chorma',		'Charter',					'https://twitter.com/Chromaatical',	0xFFcc6666],
+		['Shadowfi',			'SHADOWFI',		'Programmer',				'https://twitter.com/Shadowfi1385',		0xFFc356ff],
+		[''],
+		['Psych Engine Team'],
+		['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',					'https://twitter.com/Shadow_Mario_',	0xFFFFDD33],
+		['RiverOaken',			'riveroaken',		'Main Artist/Animator of Psych Engine',				'https://twitter.com/river_oaken',		0xFFC30085],
+		[''],
+		['Engine Contributors'],
+		['shubs',				'shubs',			'New Input System Programmer',						'https://twitter.com/yoshubs',			0xFF4494E6],
+		['PolybiusProxy',		'polybiusproxy',	'.MP4 Video Loader Extension',						'https://twitter.com/polybiusproxy',	0xFFE01F32],
+		['gedehari',			'gedehari',			'Chart Editor\'s Sound Waveform base',				'https://twitter.com/gedehari',			0xFFFF9300],
+		['Keoiki',				'keoiki',			'Note Splash Animations',							'https://twitter.com/Keoiki_',			0xFFFFFFFF],
+		['bubba',				'bubba',		'Guest Composer for "Hot Dilf"',	'https://www.youtube.com/channel/UCxQTnLmv0OAS63yzk9pVfaw',	0xFF61536A],
+		[''],
+		["Funkin' Crew"],
+		['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",				'https://twitter.com/ninja_muffin99',	0xFFF73838],
+		['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",					'https://twitter.com/PhantomArcade3K',	0xFFFFBB1B],
+		['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",					'https://twitter.com/evilsk8r',			0xFF53E52C],
+		['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",					'https://twitter.com/kawaisprite',		0xFF6475F3]
+	];
 
 	var bg:FlxSprite;
 	var descText:FlxText;
@@ -42,35 +63,12 @@ class CreditsState extends MusicBeatState
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		add(bg);
 
+		add(backdrops);
+		backdrops.scrollFactor.set(0, 0.07);
+
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
-		var pisspoop = [ //Name - Icon name - Description - Link - BG Color
-			['Android Port'],
-			['M.A. Jigsaw',		    'majigsaw',		    'Main Coder of The Port',	 'https://www.youtube.com/channel/UC2Sk7vtPzOvbVzdVTWrribQ',	'0xFFC30085'],
-			['Psych Engine Team'],
-			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',					'https://twitter.com/Shadow_Mario_',	'0xFFFFDD33'],
-			['RiverOaken',			'riveroaken',		'Main Artist/Animator of Psych Engine',				'https://twitter.com/river_oaken',		'0xFFC30085'],
-			[''],
-			['Engine Contributors'],
-			['shubs',				'shubs',			'New Input System Programmer',						'https://twitter.com/yoshubs',			'0xFF4494E6'],
-			['PolybiusProxy',		'polybiusproxy',	'.MP4 Video Loader Extension',						'https://twitter.com/polybiusproxy',	'0xFFE01F32'],
-			['gedehari',			'gedehari',			'Chart Editor\'s Sound Waveform base',				'https://twitter.com/gedehari',			'0xFFFF9300'],
-			['Keoiki',				'keoiki',			'Note Splash Animations',							'https://twitter.com/Keoiki_',			'0xFFFFFFFF'],
-			['SandPlanet',			'sandplanet',		'Mascot\'s Owner\nMain Supporter of the Engine',		'https://twitter.com/SandPlanetNG',	'0xFFD10616'],
-			['bubba',				'bubba',		'Guest Composer for "Hot Dilf"',	'https://www.youtube.com/channel/UCxQTnLmv0OAS63yzk9pVfaw',	'0xFF61536A'],
-			[''],
-			["Funkin' Crew"],
-			['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",				'https://twitter.com/ninja_muffin99',	'0xFFF73838'],
-			['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",					'https://twitter.com/PhantomArcade3K',	'0xFFFFBB1B'],
-			['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",					'https://twitter.com/evilsk8r',			'0xFF53E52C'],
-			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",					'https://twitter.com/kawaisprite',		'0xFF6475F3']
-		];
-		
-		for(i in pisspoop){
-			creditsStuff.push(i);
-		}
-	
 		for (i in 0...creditsStuff.length)
 		{
 			var isSelectable:Bool = !unselectableCheck(i);
@@ -102,14 +100,9 @@ class CreditsState extends MusicBeatState
 		descText.borderSize = 2.4;
 		add(descText);
 
-		bg.color = Std.parseInt(creditsStuff[curSelected][4]);
+		bg.color = creditsStuff[curSelected][4];
 		intendedColor = bg.color;
 		changeSelection();
-
-		#if mobileC
-		addVirtualPad(UP_DOWN, A_B);
-		#end
-
 		super.create();
 	}
 
@@ -119,7 +112,9 @@ class CreditsState extends MusicBeatState
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
-
+		backdrops.x+=90* elapsed;
+		backdrops.y +=90* elapsed;
+		backdrops.color = bg.color;
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
 
@@ -157,7 +152,7 @@ class CreditsState extends MusicBeatState
 				curSelected = 0;
 		} while(unselectableCheck(curSelected));
 
-		var newColor:Int =  Std.parseInt(creditsStuff[curSelected][4]);
+		var newColor:Int = creditsStuff[curSelected][4];
 		if(newColor != intendedColor) {
 			if(colorTween != null) {
 				colorTween.cancel();

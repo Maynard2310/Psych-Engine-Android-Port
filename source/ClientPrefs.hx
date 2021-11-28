@@ -13,6 +13,7 @@ class ClientPrefs {
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
 	public static var noteSplashes:Bool = true;
+	public static var huechange:Bool = true;
 	public static var lowQuality:Bool = false;
 	public static var framerate:Int = 60;
 	public static var cursing:Bool = true;
@@ -20,11 +21,8 @@ class ClientPrefs {
 	public static var camZooms:Bool = true;
 	public static var hideHud:Bool = false;
 	public static var noteOffset:Int = 0;
-	public static var speed:Float = 2;
-	public static var noteSize:Float = 0.7;
-	public static var scroll:Bool = false;
 	public static var arrowHSV:Array<Array<Int>> = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
-	public static var imagesPersist:Bool = false;
+	public static var imagesPersist:Bool = true;
 	public static var ghostTapping:Bool = true;
 	public static var hideTime:Bool = false;
 
@@ -61,13 +59,11 @@ class ClientPrefs {
 		FlxG.save.data.flashing = flashing;
 		FlxG.save.data.globalAntialiasing = globalAntialiasing;
 		FlxG.save.data.noteSplashes = noteSplashes;
+		FlxG.save.data.huechange = huechange;
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.framerate = framerate;
 		//FlxG.save.data.cursing = cursing;
 		//FlxG.save.data.violence = violence;
-		FlxG.save.data.speed = speed;
-		FlxG.save.data.scroll = scroll;
-		FlxG.save.data.noteSize = noteSize;
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
@@ -108,6 +104,9 @@ class ClientPrefs {
 		if(FlxG.save.data.noteSplashes != null) {
 			noteSplashes = FlxG.save.data.noteSplashes;
 		}
+		if(FlxG.save.data.huechange != null) {
+			huechange = FlxG.save.data.huechange;
+		}
 		if(FlxG.save.data.lowQuality != null) {
 			lowQuality = FlxG.save.data.lowQuality;
 		}
@@ -139,15 +138,6 @@ class ClientPrefs {
 		if(FlxG.save.data.arrowHSV != null) {
 			arrowHSV = FlxG.save.data.arrowHSV;
 		}
-		if(FlxG.save.data.speed != null) {
-			speed = FlxG.save.data.speed;
-		}
-		if(FlxG.save.data.scroll != null) {
-			scroll = FlxG.save.data.scroll;
-		}
-		if(FlxG.save.data.noteSize != null) {
-			noteSize = FlxG.save.data.noteSize;
-		}
 		if(FlxG.save.data.imagesPersist != null) {
 			imagesPersist = FlxG.save.data.imagesPersist;
 			FlxGraphic.defaultPersist = ClientPrefs.imagesPersist;
@@ -157,11 +147,6 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.hideTime != null) {
 			hideTime = FlxG.save.data.hideTime;
-		}
-		
-		// flixel automatically saves your volume!
-		if(FlxG.save.data.volume != null) {
-			FlxG.sound.volume = FlxG.save.data.volume;
 		}
 
 		var save:FlxSave = new FlxSave();

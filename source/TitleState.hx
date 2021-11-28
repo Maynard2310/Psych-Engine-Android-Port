@@ -12,6 +12,7 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.TransitionData;
+import flixel.graphics.FlxGraphic;
 //import flixel.graphics.FlxGraphic;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup;
@@ -19,6 +20,7 @@ import flixel.input.gamepad.FlxGamepad;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.system.FlxSound;
+import openfl.display.BitmapData;
 import flixel.system.ui.FlxSoundTray;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
@@ -27,6 +29,8 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
+import sys.FileSystem;
+import sys.io.File;
 
 using StringTools;
 
@@ -57,9 +61,6 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if android
-		FlxG.android.preventDefaultKeys = [BACK];
-		#end
 
 		#if (polymod && !html5)
 		if (sys.FileSystem.exists('mods/')) {
@@ -187,7 +188,7 @@ class TitleState extends MusicBeatState
 			}
 		}
 
-		Conductor.changeBPM(102);
+		Conductor.changeBPM(91);
 		persistentUpdate = true;
 
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
@@ -467,11 +468,11 @@ class TitleState extends MusicBeatState
 			switch (sickBeats)
 			{
 				case 1:
-					createCoolText(['Psych Engine by'], 45);
+					createCoolText(['Created by'], 45);
 				// credTextShit.visible = true;
 				case 3:
-					addMoreText('Shadow Mario', 45);
-					addMoreText('RiverOaken', 45);
+					addMoreText('A couple people', 45);
+					
 				// credTextShit.text += '\npresent...';
 				// credTextShit.addText();
 				case 4:
@@ -480,10 +481,10 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = 'In association \nwith';
 				// credTextShit.screenCenter();
 				case 5:
-					createCoolText(['This is a mod to'], -60);
+					createCoolText(['Cassette Girl by'], 45);
 				case 7:
-					addMoreText('This game right below lol', -60);
-					logoSpr.visible = true;
+					addMoreText('DONDRRR', 45);
+					logoSpr.visible = false;
 				// credTextShit.text += '\nNewgrounds';
 				case 8:
 					deleteCoolText();
@@ -504,13 +505,13 @@ class TitleState extends MusicBeatState
 				// credTextShit.text = "Friday";
 				// credTextShit.screenCenter();
 				case 13:
-					addMoreText('Friday');
+					addMoreText('Vs');
 				// credTextShit.visible = true;
 				case 14:
-					addMoreText('Night');
+					addMoreText('Cassette');
 				// credTextShit.text += '\nNight';
 				case 15:
-					addMoreText('Funkin'); // credTextShit.text += '\nFunkin';
+					addMoreText('Girl'); // credTextShit.text += '\nFunkin';
 
 				case 16:
 					skipIntro();
